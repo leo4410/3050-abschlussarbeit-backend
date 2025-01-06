@@ -11,7 +11,7 @@ app.add_middleware(CORSMiddleware,
         allow_headers=["*"]
     )
 
-@app.get("api/test")
+@app.get("/api/test")
 async def get_test():
     return "test message"
 
@@ -21,7 +21,7 @@ async def get_stations():
     '''
     Get all stations
     '''
-    stations = get_snow_csv()
+    stations = get_stations_csv()
     stations_json = stations.to_json(orient='records')
 
     return Response(stations_json, media_type="application/json")

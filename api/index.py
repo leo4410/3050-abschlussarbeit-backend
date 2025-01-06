@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Response, HTTPException
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 
@@ -10,6 +11,8 @@ app.add_middleware(CORSMiddleware,
         allow_methods=["*"],
         allow_headers=["*"]
     )
+
+app.mount("/data", StaticFiles(directory="data"), name="data")
 
 @app.get("/api/test")
 async def get_test():

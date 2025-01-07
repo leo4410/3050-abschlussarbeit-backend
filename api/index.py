@@ -84,8 +84,6 @@ async def get_snow(year, month: int | None = None, day: int | None = None):
 
 
 def get_stations_csv():
-    print(os.getcwd())
-    print(os.path.dirname(os.path.abspath(__file__)))
     imis_stations=pd.read_csv(f"data/imis/stations.csv")
     beob_stations=pd.read_csv(f"data/beob/stations.csv")
     

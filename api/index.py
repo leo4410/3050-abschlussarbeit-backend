@@ -33,7 +33,7 @@ async def get_stations(station_type):
     '''
     Get all stations by type
     '''
-    stations=pd.read_csv(fr"api\data\{station_type}\stations.csv")
+    stations=pd.read_csv(f"data\{station_type}/stations.csv")
     stations_json = stations.to_json(orient='records')
 
     return Response(stations_json, media_type="application/json")
@@ -86,14 +86,14 @@ async def get_snow(year, month: int | None = None, day: int | None = None):
 def get_stations_csv():
     print(os.getcwd())
     print(os.path.dirname(os.path.abspath(__file__)))
-    imis_stations=pd.read_csv(fr"data\imis\stations.csv")
-    beob_stations=pd.read_csv(fr"data\beob\stations.csv")
+    imis_stations=pd.read_csv(f"data/imis/stations.csv")
+    beob_stations=pd.read_csv(f"data/beob/stations.csv")
     
     return pd.concat([imis_stations, beob_stations])
 
 def get_snow_csv():
-    imis_snow=pd.read_csv(fr"data\imis\daily_snow.csv")
-    beob_snow=pd.read_csv(fr"data\beob\daily_snow.csv")
+    imis_snow=pd.read_csv(f"data/imis/daily_snow.csv")
+    beob_snow=pd.read_csv(f"data/beob/daily_snow.csv")
     del beob_snow["HNW_1D"]
     
     return pd.concat([imis_snow, beob_snow])

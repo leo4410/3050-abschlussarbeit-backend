@@ -1,8 +1,10 @@
 # 3050-abschlussarbeit-backend
 
-pip install -r requirements.txt
+## Data Source
+https://www.slf.ch/de/services-und-produkte/slf-datenservice/
 
 ## Start development
+pip install -r requirements.txt
 uvicorn api.index:app --reload
 
 ## Start deployment 

@@ -1,5 +1,7 @@
 # 3050-abschlussarbeit-backend
 
+pip install -r requirements.txt
+
 ## Start development
 uvicorn api.index:app --reload
 

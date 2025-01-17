@@ -1,3 +1,4 @@
+import datetime
 from fastapi import FastAPI, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
@@ -33,14 +34,14 @@ async def get_stations(station_type):
     '''
     Get all stations by type
     '''
-    stations=pd.read_csv(f"data\{station_type}/stations.csv")
+    stations=pd.read_csv(f"data/{station_type}/stations.csv")
     stations_json = stations.to_json(orient='records')
 
     return Response(stations_json, media_type="application/json")
 
 
 @app.get("/api/snow/station/{station}")
-async def get_snow(station, year: int | None = None):
+async def get_snow(station, startDate: datetime.date | None = None, endDate: datetime.date | None = None):
     '''
     Get snow data by station
     '''
@@ -51,9 +52,10 @@ async def get_snow(station, year: int | None = None):
     snow = get_snow_csv()
     snow = snow.loc[(snow["station_code"] == station)]
     
-    if year:
+    if startDate and endDate:
         snow["measure_datetime"] = pd.to_datetime(snow["measure_date"])
-        snow_filtered = snow.loc[(snow["measure_datetime"].dt.year == year)] 
+        snow_filtered = snow.loc[(snow["measure_datetime"].dt.date >= startDate)] 
+        snow_filtered = snow_filtered.loc[(snow_filtered["measure_datetime"].dt.date <= endDate)] 
         del snow_filtered["measure_datetime"]
         snow = snow_filtered
         
